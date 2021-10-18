@@ -1,0 +1,47 @@
+import React from 'react';
+import styled from 'styled-components';
+import { axios } from '../axios';
+import { GameBoxInput } from '../components/GameBoxInput';
+import { Link } from "react-router-dom"
+import { useGlobalState } from '../context';
+
+export default function Home() {
+
+  const { userId, gameId, setGameId } = useGlobalState()
+
+  return (
+    <Container>
+      <Kahoot />
+      <GameBoxInput />
+      <BottomText to="/create">Create your own kahoot for FREE here</BottomText>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  background-color: #6714ce;
+  color: #f7f5fa;
+  padding: 1rem;
+  height: calc(100vh - 2rem);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Kahoot = styled.div`
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMCIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0NDAgMTUwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0NDAgMTUwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjI2LjgsNTIuNWMtMTguNywwLjMtMzQuOCwxNi4xLTM2LDM1LjFjLTEuMSwxOS4xLDE0LjEsMzYuMSwzMy45LDM4LjFjMTkuOSwyLDM2LTEzLjgsMzYtMzUuMQoJCUMyNjAuNyw2OS4yLDI0NS41LDUyLjIsMjI2LjgsNTIuNXogTTI0MC4yLDkyYy0wLjgsOS45LTcsMTUuMy0xMS4xLDE1LjdjLTEwLjMsMS4yLTE5LjEtOC4xLTE4LjUtMjBzNS40LTE5LjMsMTUuMS0xOS41CgkJQzIzNS40LDY4LDI0MS4zLDc5LjEsMjQwLjIsOTJ6Ii8+Cgk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMzAwLjMsNTQuNGMtMTguNy0wLjMtMzMuOSwxNi43LTMzLjksMzguMXMxNi4xLDM3LjEsMzYsMzUuMWMxOS45LTIsMzUuMS0xOSwzMy45LTM4LjEKCQlDMzM1LjIsNzAuNSwzMTkuMSw1NC44LDMwMC4zLDU0LjR6IE0yOTgsMTA5LjdjLTQuMS0wLjUtMTAuMi01LjktMTEuMS0xNS43Yy0xLjEtMTIuOSw0LjgtMjQsMTQuNS0yMy44czE0LjUsNy42LDE1LjEsMTkuNQoJCUMzMTcuMSwxMDEuNSwzMDguMywxMTAuOSwyOTgsMTA5Ljd6Ii8+Cgk8cG9seWdvbiBmaWxsPSIjRkZGRkZGIiBwb2ludHM9IjgyLjUsMzYuNiA2Mi40LDI4LjkgMjMuMiw2Ni4zIDIzLjIsMTkuNiAwLDI1LjUgMCwxMzUuMiAyMy4yLDEzNiAyMyw5Ny42IDM3LjMsODMuOCA1Mi40LDEzNiAKCQk3Mi45LDEzNiA1NCw2Ny45IAkiLz4KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNDYuMiw0OS4yTDE0NS44LDBMMTI2LDUuMmwzLjIsMTIxLjZsMTkuNSwwLjdsLTEuMS02Mi44YzQuMy0xLjksMTguNC01LjgsMTguOSw5LjdsMS45LDIyLjFsMS4zLDMxLjEKCQloMjAuNGwtNy43LTUzLjdDMTc5LjMsNDIuNSwxNjcuOCw0Mi40LDE0Ni4yLDQ5LjJ6Ii8+Cgk8cG9seWdvbiBmaWxsPSIjRkZGRkZGIiBwb2ludHM9IjQxNS4yLDEyOC4yIDQwOS41LDE0MS42IDQyMS43LDE1MCA0MzMuNywxNDIuOSA0MjguNiwxMjguMiAJIi8+Cgk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMzYzLjQsMTkuNmwtMTUuNS02LjR2MzIuMWwtMTcuMy0wLjZsMy4zLDIyLjhoMTRsMSw1NC4zYzAsMC0yLjIsMTkuNSwyNy42LDE1LjFjMCwwLDkuMy0yLjgsOS05LjN2LTIxLjQKCQljMCwwLTYuMywzLjctMTMuMSwzLjdjLTYuOCwwLTYuOS0zLjMtNi45LTMuM2wtMS44LTQybDIxLjctMS4yVjQ5LjVMMzYzLjEsNDhMMzYzLjQsMTkuNnoiLz4KCTxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iNDQwLDE5LjggMzk5LDEyIDQyNC4yLDEyMC41IAkiLz4KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik03Ny42LDQ5LjlMODMsNjQuMWMxMy41LTguMSwyMS4xLDAsMjEuMSwwbC0wLjEsOS4xYy00MC4yLDcuMS0zMCw0NC4zLTMwLDQ0LjMKCQljNC4xLDE0LjYsMTcuMywxNC4xLDE3LjMsMTQuMWgzMC4xbDAuNi02Ny43QzExNy4zLDMyLjQsNzcuNiw0OS45LDc3LjYsNDkuOXogTTEwNCwxMTguNmMwLDAtMTQuNiwzLjUtMTYuMi0xMC43CgkJYzAsMCwwLjMtMjIsMTYuNy0xOS42TDEwNCwxMTguNnoiLz4KPC9nPgo8L3N2Zz4K) center bottom no-repeat;
+  width: 200px;
+  height: 75px;
+`;
+
+const BottomText = styled(Link)`
+  margin-top: 3rem;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
