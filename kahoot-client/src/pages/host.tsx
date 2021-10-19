@@ -49,7 +49,7 @@ export default function Host() {
 
   useEffect(() => {
     websocket = new WebSocket(
-      `ws://localhost:4000/api/websocket/host/${quizId}?userId=${userId}`
+      `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/api/websocket/host/${quizId}?userId=${userId}`
     );
 
     websocket.onopen = () => {

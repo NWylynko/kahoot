@@ -46,7 +46,7 @@ export default function Play () {
 
   useEffect(() => {
 
-    websocket = new WebSocket(`ws://localhost:4000/api/websocket/play/${gamePin}?userId=${userId}&name=${nickname}`);
+    websocket = new WebSocket(`${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/api/websocket/play/${gamePin}?userId=${userId}&name=${nickname}`);
 
     websocket.onopen = () => {
       console.log("Connected to websocket");
