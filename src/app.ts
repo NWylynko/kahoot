@@ -18,8 +18,10 @@ app.register(FastifyCors, {
   origin: "*",
 });
 
+const staticFiles = path.join(__dirname, "..", "kahoot-client", "build")
+
 app.register(FastifyStatic, {
-  root: path.join(__dirname, "..", "kahoot-client", "build"),
+  root: staticFiles,
   prefix: "/"
 });
 

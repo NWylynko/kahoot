@@ -69,6 +69,9 @@ export default function Play () {
         setSelectedOption(null);
       } else if (event.event === "answer") {
         setAnswer(event.payload.answer);
+      } else if (event.event === "gameDone") {
+        console.log("Game Done");
+        console.log(event.payload);
       }
     }
 

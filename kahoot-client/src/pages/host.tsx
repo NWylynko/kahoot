@@ -79,6 +79,9 @@ export default function Host() {
         console.log("Answers");
         console.log(event.payload);
         setAnswers(event.payload.answers);
+      } else if (event.event === "gameDone") {
+        console.log("Game Done");
+        console.log(event.payload);
       }
     };
 

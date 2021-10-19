@@ -101,6 +101,27 @@ export const nextQuestion = (gamePin: string) => {
   const finishAt = startAt + twentySeconds;
   const question = games[gamePin].questions.find(question => question.order === games[gamePin].currentQuestion)
   const currentQuestion = games[gamePin].currentQuestion
+
+  const gameDone = currentQuestion === games[gamePin].questions.length;
+
+  if (gameDone) {
+    clients[games[gamePin].hostId].socket.send(
+      JSON.stringify({ event: "gameDone", payload: { game: games[gamePin] }})
+    );
+
+    games[gamePin].players.map(({playerId}) => {
+      const socket = clients[playerId];
+      if (socket) {
+        socket.socket.send(JSON.stringify({ event: "gameDone", payload: {
+          game: games[gamePin]
+        }}));
+      }
+    })
+
+    removeGame(gamePin);
+
+    return;
+  }
   
   clients[games[gamePin].hostId].socket.send(
     JSON.stringify({ event: "nextQuestion", payload: {
