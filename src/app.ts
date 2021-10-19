@@ -23,7 +23,9 @@ app.register(FastifyStatic, {
   prefix: "/"
 });
 
-app.register(fastifyRedis, { host: '127.0.0.1' })
+const redisHost = process.env.REDIS_HOST || "127.0.0.1";
+
+app.register(fastifyRedis, { host: redisHost })
 
 app.register(FastifyWebsocket)
 
